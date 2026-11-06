@@ -99,10 +99,11 @@ Az oldalak:
 
 ## 6. Használt technológiák
 
-- **Frontend:** HTML, CSS, JavaScript (reszponzív elrendezés, `fetch` API)
-- **Backend:** REST API, JSON válaszokkal
-- **Adatbázis:** relációs (SQL) adatbázis, összekapcsolt táblákkal
+- **Frontend:** Vue (Vite), Tailwind CSS
+- **Backend:** Laravel (PHP), REST API JSON válaszokkal
+- **Adatbázis:** MySQL
 - **Hitelesítés:** bejelentkezés, hash-elt jelszavak, szerepkör alapú jogosultságkezelés
+- **Futtatás:** Docker Compose, `just` parancsok
 
 ## 7. A projekt eredménye
 
