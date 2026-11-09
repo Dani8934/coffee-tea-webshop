@@ -1,9 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..700&family=Karla:wght@400;500;600&display=swap');
 @import "tailwindcss";
 
 
 @custom-variant dark (&:is(.dark *));
 
+@theme {
+  --font-sans: 'Karla', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif;
+}
+
 @theme inline {
+  --color-origin-ethiopia: var(--origin-ethiopia);
+  --color-origin-colombia: var(--origin-colombia);
+  --color-origin-brazil: var(--origin-brazil);
+  --color-origin-japan: var(--origin-japan);
+  --color-origin-india: var(--origin-india);
+  --color-origin-hungary: var(--origin-hungary);
+  --color-tea: var(--tea);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -43,39 +56,47 @@
 }
 
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.141 0.005 285.823);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.141 0.005 285.823);
+  /* Aromakert paletta – Figma terv szerint (hex az oklch mellett) */
+  --background: oklch(0.981 0.004 106.5); /* #f9f9f6 papír */
+  --foreground: oklch(0.216 0.026 47.4); /* #24160f pörkölt barna */
+  --card: oklch(1 0 0); /* #ffffff */
+  --card-foreground: oklch(0.216 0.026 47.4);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.141 0.005 285.823);
-  --primary: oklch(0.21 0.006 285.885);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.967 0.001 286.375);
-  --secondary-foreground: oklch(0.21 0.006 285.885);
-  --muted: oklch(0.967 0.001 286.375);
-  --muted-foreground: oklch(0.552 0.016 285.938);
-  --accent: oklch(0.967 0.001 286.375);
-  --accent-foreground: oklch(0.21 0.006 285.885);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.577 0.245 27.325);
-  --border: oklch(0.92 0.004 286.32);
-  --input: oklch(0.92 0.004 286.32);
-  --ring: oklch(0.705 0.015 286.067);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.141 0.005 285.823);
-  --sidebar-primary: oklch(0.21 0.006 285.885);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.967 0.001 286.375);
-  --sidebar-accent-foreground: oklch(0.21 0.006 285.885);
-  --sidebar-border: oklch(0.92 0.004 286.32);
-  --sidebar-ring: oklch(0.705 0.015 286.067);
+  --popover-foreground: oklch(0.216 0.026 47.4);
+  --primary: oklch(0.216 0.026 47.4); /* gombok, lábléc */
+  --primary-foreground: oklch(0.981 0.004 106.5);
+  --secondary: oklch(0.946 0.010 93.6); /* #efede6 */
+  --secondary-foreground: oklch(0.216 0.026 47.4);
+  --muted: oklch(0.946 0.010 93.6);
+  --muted-foreground: oklch(0.502 0.018 67.4); /* #6b6259 */
+  --accent: oklch(0.946 0.010 93.6);
+  --accent-foreground: oklch(0.216 0.026 47.4);
+  --destructive: oklch(0.438 0.126 29.4); /* #8a2f25 */
+  --destructive-foreground: oklch(0.981 0.004 106.5);
+  --border: oklch(0.878 0.018 84.6); /* #dcd6ca */
+  --input: oklch(0.878 0.018 84.6);
+  --ring: oklch(0.502 0.018 67.4);
+  --tea: oklch(0.434 0.057 166.7); /* #2f5b4a – kis címkék, tea csempe */
+  --origin-ethiopia: oklch(0.680 0.137 74.7); /* #c98a1b */
+  --origin-colombia: oklch(0.491 0.128 258.7); /* #2f5fa8 */
+  --origin-brazil: oklch(0.583 0.112 152.8); /* #3e8e5a */
+  --origin-japan: oklch(0.739 0.112 2.0); /* #e58ca5 */
+  --origin-india: oklch(0.666 0.160 48.2); /* #e0702b */
+  --origin-hungary: oklch(0.512 0.131 307.5); /* #7b4fa0 */
+  --chart-1: var(--origin-ethiopia);
+  --chart-2: var(--origin-colombia);
+  --chart-3: var(--origin-brazil);
+  --chart-4: var(--origin-japan);
+  --chart-5: var(--origin-india);
+  --radius: 0.5rem; /* 8 px: gombok, mezők */
+  --sidebar: oklch(0.981 0.004 106.5);
+  --sidebar-foreground: oklch(0.216 0.026 47.4);
+  --sidebar-primary: oklch(0.216 0.026 47.4);
+  --sidebar-primary-foreground: oklch(0.981 0.004 106.5);
+  --sidebar-accent: oklch(0.946 0.010 93.6);
+  --sidebar-accent-foreground: oklch(0.216 0.026 47.4);
+  --sidebar-border: oklch(0.878 0.018 84.6);
+  --sidebar-ring: oklch(0.502 0.018 67.4);
 }
 
 .dark {
@@ -118,6 +139,11 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+  h1,
+  h2,
+  h3 {
+    @apply font-display font-semibold tracking-tight;
   }
 }
