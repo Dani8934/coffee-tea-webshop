@@ -4,13 +4,13 @@
     "wrapperKey": "data",
     "relationships": [
         {
-            "source": "posts",
-            "destination": "comments",
+            "source": "categories",
+            "destination": "products",
             "type": "hasMany"
         },
         {
-            "source": "comments",
-            "destination": "posts",
+            "source": "products",
+            "destination": "categories",
             "type": "belongsTo"
         }
     ]

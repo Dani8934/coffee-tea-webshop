@@ -1,83 +1,117 @@
 <script setup>
-import {
-  NavigationMenu,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuItem,
-  navigationMenuTriggerStyle
-} from '@components/ui/navigation-menu'
-import { Sheet, SheetContent, SheetTrigger } from '@components/ui/sheet'
+import { ref, watch } from 'vue'
+import { useRoute } from 'vue-router'
+import { Menu, X } from '@lucide/vue'
+
+defineProps({
+  cartCount: { 
+    type: Number, 
+    default: 0 
+  }
+})
 
 const title = import.meta.env.VITE_APP_NAME
 
 const links = [
-  {
-    label: 'Page',
-    to: '#'
+  { 
+    label: 'Termékek', 
+    to: '/termekek' 
+  },
+  { 
+    label: 'Kávé', 
+    to: '/kave' 
+  },
+  { 
+    label: 'Tea', 
+    to: '/tea' 
+  },
+  { 
+    label: 'Kiegészítők', 
+    to: '/kiegeszitok' 
   }
 ]
+
+const menuOpen = ref(false)
+const route = useRoute()
+
+watch(() => route.fullPath, () => (menuOpen.value = false))
 </script>
 
 <template>
-  <header class="bg-white">
-    <div class="flex justify-between p-3 border-b-2 flex-wrap">
-      <RouterLink to="/" class="flex items-center space-x-3">
-        <span class="self-center text-2xl font-semibold">{{ title }}</span>
+  <header
+    class="sticky top-0 z-40 bg-background lg:static"
+    @keydown.esc="menuOpen = false"
+  >
+    <div class="flex items-center justify-between gap-6 px-5 py-3 lg:px-20 lg:py-5">
+      <RouterLink to="/" class="font-display text-2xl font-medium tracking-tight">
+        {{ title }}
       </RouterLink>
-      <Sheet>
-        <SheetTrigger asChild>
-          <button variant="outline" size="icon" class="lg:hidden">
-            <svg
-              class="h-6 w-6"
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <line x1="4" x2="20" y1="12" y2="12" />
-              <line x1="4" x2="20" y1="6" y2="6" />
-              <line x1="4" x2="20" y1="18" y2="18" />
-            </svg>
-            <span class="sr-only">Navigációs menü</span>
-          </button>
-        </SheetTrigger>
-        <SheetContent side="left">
-          <RouterLink to="/" class="mr-6 hidden lg:flex">
-            <span class="sr-only">{{ title }}</span>
-          </RouterLink>
-          <div class="grid gap-2 py-6">
-            <RouterLink
-              v-for="link of links"
-              :key="link.to"
-              :to="link.to"
-              class="flex w-full items-center py-2 text-lg font-semibold"
-            >
-              {{ link.label }}
-            </RouterLink>
-          </div>
-        </SheetContent>
-      </Sheet>
-      <NavigationMenu class="hidden lg:block">
-        <NavigationMenuList>
-          <NavigationMenuItem v-for="link of links" :key="link.to">
-            <RouterLink v-slot="{ isActive, href, navigate }" :to="link.to" custom>
-              <NavigationMenuLink
-                :active="isActive"
-                :href
-                :class="navigationMenuTriggerStyle()"
-                @click="navigate"
-              >
-                {{ link.label }}
-              </NavigationMenuLink>
-            </RouterLink>
-          </NavigationMenuItem>
-        </NavigationMenuList>
-      </NavigationMenu>
+
+      <nav class="hidden items-center gap-8 lg:flex" aria-label="Főmenü">
+        <RouterLink
+          v-for="link of links"
+          :key="link.to"
+          :to="link.to"
+          class="text-sm font-medium hover:underline underline-offset-4"
+          active-class="underline"
+        >
+          {{ link.label }}
+        </RouterLink>
+      </nav>
+
+      <div class="flex items-center gap-2 lg:gap-6">
+        <RouterLink to="/bejelentkezes" class="hidden text-sm font-medium hover:underline underline-offset-4 lg:inline">
+          Bejelentkezés
+        </RouterLink>
+        <RouterLink
+          to="/kosar"
+          class="inline-flex h-9 items-center rounded-lg bg-primary px-4 text-sm font-medium text-primary-foreground"
+        >
+          Kosár ({{ cartCount }})
+        </RouterLink>
+        <button
+          type="button"
+          class="inline-flex h-9 w-10 items-center justify-center rounded-lg lg:hidden"
+          :class="menuOpen ? 'bg-secondary' : ''"
+          :aria-expanded="menuOpen"
+          aria-controls="mobil-menu"
+          @click="menuOpen = !menuOpen"
+        >
+          <X v-if="menuOpen" class="size-5" aria-hidden="true" />
+          <Menu v-else class="size-5" aria-hidden="true" />
+          <span class="sr-only">{{ menuOpen ? 'Menü bezárása' : 'Menü megnyitása' }}</span>
+        </button>
+      </div>
     </div>
+
+    <template v-if="menuOpen">
+      <button
+        type="button"
+        class="absolute inset-x-0 top-full h-screen cursor-default bg-primary/45 lg:hidden"
+        tabindex="-1"
+        aria-label="Menü bezárása"
+        @click="menuOpen = false"
+      />
+      <nav
+        id="mobil-menu"
+        class="absolute inset-x-0 top-full border-y border-border bg-card px-5 pt-1 pb-5 shadow-lg lg:hidden"
+        aria-label="Főmenü"
+      >
+        <RouterLink
+          v-for="link of links"
+          :key="link.to"
+          :to="link.to"
+          class="block border-b border-border py-3.5 font-display text-2xl font-medium tracking-tight"
+        >
+          {{ link.label }}
+        </RouterLink>
+        <RouterLink
+          to="/bejelentkezes"
+          class="mt-5 flex h-12 items-center justify-center rounded-lg border border-primary text-sm font-semibold"
+        >
+          Bejelentkezés
+        </RouterLink>
+      </nav>
+    </template>
   </header>
 </template>

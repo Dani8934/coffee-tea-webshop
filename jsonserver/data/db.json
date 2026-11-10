@@ -1,10 +1,164 @@
 {
-  "posts": [
-    { "id": "1", "title": "a title", "views": 100 },
-    { "id": "2", "title": "another title", "views": 200 }
+  "categories": [
+    {
+      "id": "1",
+      "name": "Szemes kávé",
+      "slug": "szemes-kave"
+    },
+    {
+      "id": "2",
+      "name": "Őrölt kávé",
+      "slug": "orolt-kave"
+    },
+    {
+      "id": "3",
+      "name": "Tea",
+      "slug": "tea"
+    },
+    {
+      "id": "4",
+      "name": "Kiegészítők",
+      "slug": "kiegeszitok"
+    }
   ],
-  "comments": [
-    { "id": "1", "text": "a comment about post 1", "post_id": "1" },
-    { "id": "2", "text": "another comment about post 1", "post_id": "1" }
+  "products": [
+    {
+      "id": "1",
+      "slug": "yirgacheffe",
+      "name": "Yirgacheffe",
+      "origin": "Etiópia",
+      "region": null,
+      "category_id": "1",
+      "type": "Szemes kávé",
+      "detail": "világos pörkölés",
+      "description": "Etiópia déli részén termett, mosott feldolgozású kávé. Virágos illat, citrusos savasság és teás test jellemzi. Szűrős kávéfőzőhöz és pour overhez ajánljuk.",
+      "image": null,
+      "packages": [
+        {
+          "size": "250 g",
+          "price": 3490
+        },
+        {
+          "size": "1 kg",
+          "price": 11990
+        }
+      ],
+      "stock": 24
+    },
+    {
+      "id": "2",
+      "slug": "huila",
+      "name": "Huila",
+      "origin": "Kolumbia",
+      "region": null,
+      "category_id": "1",
+      "type": "Szemes kávé",
+      "detail": "közepes pörkölés",
+      "description": "Kolumbiai kávé karamellás édességgel és lágy, almás savassággal. Szűrős kávéfőzőhöz és eszpresszóhoz is jó.",
+      "image": null,
+      "packages": [
+        {
+          "size": "250 g",
+          "price": 3190
+        },
+        {
+          "size": "1 kg",
+          "price": 10990
+        }
+      ],
+      "stock": 40
+    },
+    {
+      "id": "3",
+      "slug": "santos",
+      "name": "Santos",
+      "origin": "Brazília",
+      "region": null,
+      "category_id": "2",
+      "type": "Őrölt kávé",
+      "detail": "sötét pörkölés",
+      "description": "Brazil kávé, diós-csokoládés ízjegyekkel és alacsony savassággal. Őrölve érkezik, kotyogóshoz és filteres kávéfőzőhöz ajánljuk.",
+      "image": null,
+      "packages": [
+        {
+          "size": "250 g",
+          "price": 2890
+        },
+        {
+          "size": "1 kg",
+          "price": 9990
+        }
+      ],
+      "stock": 35
+    },
+    {
+      "id": "4",
+      "slug": "sencha",
+      "name": "Sencha",
+      "origin": "Japán",
+      "region": null,
+      "category_id": "3",
+      "type": "Zöld tea",
+      "detail": "szálas",
+      "description": "Friss, fűszeres japán zöld tea, enyhén édes, tengeri utóízzel. 70–80 °C-os vízzel készítsd, 1–2 percig áztasd.",
+      "image": null,
+      "packages": [
+        {
+          "size": "250 g",
+          "price": 2990
+        },
+        {
+          "size": "1 kg",
+          "price": 10490
+        }
+      ],
+      "stock": 18
+    },
+    {
+      "id": "5",
+      "slug": "first-flush",
+      "name": "First Flush",
+      "origin": "India",
+      "region": "Darjeeling",
+      "category_id": "3",
+      "type": "Fekete tea",
+      "detail": "szálas",
+      "description": "Tavaszi szüretű Darjeeling, világos, virágos és muskotályos jegyekkel. Tej nélkül, 90 °C-os vízzel iszogasd.",
+      "image": null,
+      "packages": [
+        {
+          "size": "250 g",
+          "price": 3390
+        },
+        {
+          "size": "1 kg",
+          "price": 11790
+        }
+      ],
+      "stock": 12
+    },
+    {
+      "id": "6",
+      "slug": "erdei-gyumolcs",
+      "name": "Erdei gyümölcs",
+      "origin": "Magyarország",
+      "region": null,
+      "category_id": "3",
+      "type": "Gyümölcstea",
+      "detail": "szálas",
+      "description": "Magyar gyümölcstea szárított erdei gyümölcsökből, koffeinmentes. Forrón és jegesen is finom.",
+      "image": null,
+      "packages": [
+        {
+          "size": "250 g",
+          "price": 1890
+        },
+        {
+          "size": "1 kg",
+          "price": 6490
+        }
+      ],
+      "stock": 50
+    }
   ]
 }
