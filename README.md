@@ -4,13 +4,13 @@
 
 A projekt célja egy olyan webshop létrehozása, ahol a látogatók kávékat, teákat és kiegészítőket böngészhetnek, kosárba tehetik a kiválasztott termékeket, majd rendelést adhatnak le.
 
-A termékek kategóriákba vannak rendezve (például szemes kávé, őrölt kávé, fekete tea, zöld tea, gyümölcstea, kiegészítők), és származási ország szerint is szűrhetők. A legtöbb termék több kiszerelésben (például 250 g és 1 kg) érhető el.
+A termékek kategóriákba vannak rendezve (szemes kávé, őrölt kávé, tea, kiegészítők), és származási ország szerint is szűrhetők. A legtöbb termék több kiszerelésben (például 250 g és 1 kg) érhető el.
 
 A regisztrált felhasználók megtekinthetik a korábbi rendeléseiket, az adminisztrátorok pedig kezelhetik a termékkínálatot és a beérkezett rendeléseket.
 
 ## 2. A webalkalmazás működése
 
-A webalkalmazás három részből áll: frontendből, backendből és relációs adatbázisból. A frontend HTTP kéréseken keresztül kommunikál a backenddel, az adatok `fetch` segítségével, JSON formátumban érkeznek meg az oldalakra.
+A webalkalmazás három részből áll: frontendből, backendből és relációs adatbázisból. A frontend HTTP kéréseken keresztül kommunikál a backenddel, az adatok JSON formátumban érkeznek meg az oldalakra.
 
 A rendszer a következő műveleteket támogatja:
 
@@ -36,7 +36,6 @@ A rendszer a következő műveleteket támogatja:
 | GET | `/api/products` | Termékek listázása (szűrés kategória és származás szerint, keresés) | Vendég |
 | GET | `/api/products/:id` | Egy termék adatai a kiszerelésekkel együtt | Vendég |
 | GET | `/api/categories` | Kategóriák lekérése | Vendég |
-| GET | `/api/origins` | Származási országok lekérése | Vendég |
 | POST | `/api/products` | Új termék felvétele | Admin |
 | PUT | `/api/products/:id` | Termék módosítása | Admin |
 | DELETE | `/api/products/:id` | Termék törlése | Admin |
@@ -48,23 +47,23 @@ A rendszer a következő műveleteket támogatja:
 
 Az adatbázis szerkezete az elkészített [adatbázisterv](https://dbdiagram.io/d/Kave_teabolt-6aeb16bdf1d298b573605365) alapján kerül kialakításra.
 
-Az adatbázis hét, egymással összekapcsolt táblából áll:
+Az adatbázis hat, egymással összekapcsolt táblából áll:
 
 | Tábla | Tartalma | Kapcsolatok |
 |---|---|---|
 | `users` | felhasználók adatai, hash-elt jelszó, szerepkör | 1:N `orders` |
 | `categories` | termékkategóriák | 1:N `products` |
-| `origins` | származási országok | 1:N `products` |
-| `products` | termékek alapadatai (név, leírás, kép, pörköltségi fok) | N:1 `categories`, N:1 `origins`, 1:N `product_variants` |
-| `product_variants` | kiszerelések (például 250 g, 1 kg) ára és készlete | N:1 `products`, 1:N `order_items` |
+| `products` | termékek alapadatai (név, származás, régió, típus, részlet, leírás, kép) | N:1 `categories`, 1:N `product_packages` |
+| `product_packages` | kiszerelések (például 250 g, 1 kg) ára és készlete | N:1 `products`, 1:N `order_items` |
 | `orders` | rendelések fejléce (státusz, szállítási cím, szállítási díj, végösszeg) | N:1 `users`, 1:N `order_items` |
-| `order_items` | rendelés tételei (kiszerelés, darabszám, vásárláskori egységár) | N:1 `orders`, N:1 `product_variants` |
+| `order_items` | rendelés tételei (kiszerelés, darabszám, vásárláskori egységár) | N:1 `orders`, N:1 `product_packages` |
 
 Néhány tervezési döntés:
 
 - Az `order_items` tábla teremti meg az N:M kapcsolatot a rendelések és a kiszerelések között.
 - A vásárláskori egységár az `order_items` táblában külön eltárolásra kerül, így egy későbbi áremelés nem módosítja a korábbi rendeléseket.
-- A kiegészítőknek (például bögre) nincs származási országuk, ezért a `products.origin_id` mező üres lehet.
+- A kiegészítőknek (például bögre) nincs származási országuk, ezért a `products.origin` mező üres lehet.
+- A származási ország fix listából választható, a régió, a részlet és a leírás megadása nem kötelező.
 - A jelszavak csak hash-elve kerülnek tárolásra.
 
 ## 4. A webshop fő funkciói
@@ -77,7 +76,7 @@ A program egyik fontos feladata, hogy a rendelési folyamat helyesen és biztons
 - **Készletellenőrzés** – rendeléskor a rendszer ellenőrzi, hogy van-e elegendő készlet, és a sikeres rendelés után csökkenti azt. Ha nincs elég készlet, a program ezt jelzi a felhasználónak.
 - **Szállítási költség** – egy meghatározott összeg (például 15 000 Ft) felett a szállítás ingyenes, alatta a rendszer hozzáadja a szállítási díjat a végösszeghez.
 - **Árszámítás a szerveren** – a végösszeget a backend számolja ki a rendelés leadásakor, nem a frontendtől kapott adatok alapján.
-- **Rendelési státuszok** – a rendelés az `új`, `feldolgozás alatt`, `szállítás alatt` és `teljesítve` állapotokon halad végig, vagy `törölt` lehet. A státuszt az admin módosítja.
+- **Rendelési státuszok** – a rendelés a `feldolgozás alatt` és `szállítás alatt` állapotokon halad végig, és `kézbesítve` lesz, vagy `lemondva` lehet. A státuszt az admin módosítja.
 
 ## 5. A weboldal
 
