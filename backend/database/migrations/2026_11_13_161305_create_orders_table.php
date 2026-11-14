@@ -15,6 +15,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onUpdate('cascade')->onDelete('restrict');
             $table->string('status')->default('feldolgozás alatt');
+            $table->unsignedInteger('shipping_cost')->default(0);
+            $table->unsignedInteger('total_price');
+            $table->string('shipping_address');
             $table->timestamps();
         });
     }
