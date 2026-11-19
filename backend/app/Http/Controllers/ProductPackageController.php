@@ -4,47 +4,32 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreProductPackageRequest;
 use App\Http\Requests\UpdateProductPackageRequest;
+use App\Http\Resources\ProductPackageResource;
+use App\Models\Product;
 use App\Models\ProductPackage;
 
 class ProductPackageController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function store(StoreProductPackageRequest $request, Product $product)
     {
-        //
+        $data = $request->validated();
+        $package = $product->packages()->create($data);
+
+        return new ProductPackageResource($package);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreProductPackageRequest $request)
+    public function update(UpdateProductPackageRequest $request, ProductPackage $package)
     {
-        //
+        $data = $request->validated();
+        $package->update($data);
+
+        return new ProductPackageResource($package);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(ProductPackage $productPackage)
+    public function destroy(ProductPackage $package)
     {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateProductPackageRequest $request, ProductPackage $productPackage)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(ProductPackage $productPackage)
-    {
-        //
+        return $package->delete()
+            ? response()->noContent()
+            : abort(500);
     }
 }
