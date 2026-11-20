@@ -15,7 +15,7 @@ const formatPrice = (value) =>
     <div class="aspect-[302/190] w-full bg-muted">
       <img
         v-if="product.image"
-        :src="product.image"
+        :src="`/images/products/${product.image}`"
         :alt="product.name"
         loading="lazy"
         class="size-full object-cover"
@@ -41,7 +41,7 @@ const formatPrice = (value) =>
         </span>
         <RouterLink
           v-if="product.stock > 0"
-          :to="`/termekek/${product.slug}`"
+          :to="`/termekek/${product.id}`"
           class="details-button"
         >
           Részletek
