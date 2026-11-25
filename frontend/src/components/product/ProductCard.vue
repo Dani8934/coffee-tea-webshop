@@ -36,7 +36,7 @@ const formatPrice = (value) =>
       </ul>
 
       <div class="mt-auto flex items-center justify-between gap-3 pt-4">
-        <span class="text-sm font-semibold">
+        <span v-if="product.packages?.length" class="text-sm font-semibold">
           {{ formatPrice(product.packages[0].price) }} Ft-tól
         </span>
         <RouterLink
